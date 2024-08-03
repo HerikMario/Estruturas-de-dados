@@ -4,6 +4,7 @@ Fazer as funções Vazia(), Cheia(), Empilhar(), Desempilhar(), Pertence(), Most
 #include <iostream>
 #include <string>
 #include <new>
+#include <cstring>
 
 using namespace std;
 
@@ -28,19 +29,15 @@ bool empilhar (Pilha &a, int x) {
 
         int* v = new int[a .lim_atual];
 
-        for (int i = 0; i < (a .lim_atual); i++) {
-            v[i] = a .p[i];
-        }
+        memcpy (v, a .p, sizeof(int)*(a .lim_atual));
 
         delete[] a .p;
 
-        a .lim_atual += 1;
+        a .lim_atual = (a .lim_atual) * 2 ;
         
         a .p = new int[a .lim_atual];
 
-        for (int i = 0; i < (a .lim_atual); i++) {
-            a .p[i] = v[i];
-        } 
+        memcpy (a .p, v, sizeof(int)*(a .lim_atual));
 
         delete[] v;
 
@@ -61,19 +58,13 @@ bool desempilhar(Pilha &a){
 
         int* u = new int[novo_tam];
 
-        for (int i = 0; i < (novo_tam); i++)
-        {
-            u[i] = a .p[i];
-        }
+        memcpy (u,a .p,sizeof(int)*novo_tam);
 
         delete[] a .p;
         
         a .p = new int[novo_tam];
 
-        for (int i = 0; i < (novo_tam); i++)
-        {
-            a .p[i] = u[i];
-        }
+        memcpy (a .p,u,sizeof(int)*novo_tam);
 
         delete[] u;
         
