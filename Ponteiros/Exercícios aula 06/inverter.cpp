@@ -20,8 +20,15 @@ void inverter (double *p, int n) {
 
 void preencher_array(double* o, int tam) {
 
+    cout << "Digite os valores da array:";
+
+    cout << endl;
+
+    double valor;
+
     for (int i = 0; i < tam; ++i) {
-        o[i] = i+1;
+        cin >> valor;
+        o[i] = valor;
     }
 
 }
