@@ -10,9 +10,9 @@ using namespace std;
 struct Fila {
 
     int lim_atual = 2;
-    int n = 0; //contador de numero de elementos na pilha
+    int n = 0; //contador de numero de elementos na fila
     int* v = new int[lim_atual];
-    int* p = v;
+    int* p = &v[0]; // primeiro da fila, usardo apenas na função de mostrar_primeiro()
 
 };
 
@@ -24,24 +24,62 @@ bool cheia (Fila &a) {
     return (a .n == a .lim_atual);
 }
 
-
-
-void mostrar (Pilha &a) {
-
-    if (!vazia(a)){
-        cout << "A pilha atual eh (Primeiro da pilha ... Ultimo da pilha): ";
-        for (int i = 0; i < (a .n); i++)
-        {
-            cout << a .p[i] << " ";
-        }
-    } else {
-        cout << "Pilha vazia, nada pra mostrar!";
+bool enfilar(Fila &f, int x) {
+    if (cheia(f)) {
+        int novo_tam = f.lim_atual * 2;
+        int* temp = new int[novo_tam];
+        memcpy(temp, f.v, sizeof(int) * f.lim_atual);
+        delete[] f.v;
+        f.v = temp;
+        f.lim_atual = novo_tam;
     }
+
+    f.v[f.n] = x;
+    f.n += 1;
+    return true;
+}
+
+bool desenfilar(Fila &f) {
+
+    if (vazia(f)) {
+        return false;
+    }
+
+    for (int i = 1; i < f.n; i++) {
+        f.v[i - 1] = f.v[i];
+    }
+
+    f .n -= 1;
+
+    if (f. n > 0 && f .n <= f .lim_atual/4) { //redimensiona o vetor
+        int novo_tam = (f .lim_atual)/2;
+        int* temp = new int[novo_tam];
+        memcpy(temp, f .v,sizeof(int)*f .n);
+        delete[] f .v;
+        f .v = temp;
+        f .p = f .v;
+        f .lim_atual = novo_tam;
+    }
+    return true;
+}
+
+void mostrar (Fila &f) {
+
+    if (vazia(f)) {
+        cout << "Fila vazia!";
+    } else {
+        cout << "Essa eh a fila: ";
+    for (int i = 0; i < f .n ; i++)
+    {
+        cout << f .v[i] << " ";
+    }
+    }
+    
 }
  
 int main() {
 
-    Pilha pilha;
+    Fila fila;
     char opcao;
 
     for (;;) {
@@ -57,18 +95,18 @@ int main() {
             cout << "Digite o valor que quer enfilar:";
             cin >> valor;
             cout << endl;
-            empilhar(pilha,valor);
-            cout << "Valor empilhado com sucesso!";
+            enfilar(fila,valor);
+            cout << "Valor enfilado com sucesso!";
         } 
         else if (opcao == 'D'){
-            if (desempilhar(pilha)){
-                cout << "Desempilhado com sucesso";
+            if (desenfilar(fila)){
+                cout << "Desenfilado com sucesso";
             } else {
-                cout << "A pilha esta vazia, impossivel desempilhar!";
+                cout << "A fila esta vazia, impossivel desenfilar!";
             }
         } 
         else if (opcao == 'M') {
-            mostrar(pilha);
+            mostrar(fila);
         }
         else if (opcao == 'S') {
 
