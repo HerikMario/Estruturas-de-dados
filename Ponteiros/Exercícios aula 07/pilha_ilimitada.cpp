@@ -24,6 +24,17 @@ bool cheia (Pilha &a) {
     return (a .n == a .lim_atual);
 }
 
+bool pertence(Pilha &a, int x) {
+   for (int i = 0; i < a .n; i++)
+   {
+    if (a .p[i] == x)
+    {
+       return true;
+    }
+   }
+   return false;
+}
+
 bool empilhar (Pilha &a, int x) {
     if (cheia(a)) {
 
@@ -96,7 +107,7 @@ int main() {
 
     for (;;) {
 
-        cout << "Escolha a acao (Empilhar, Desempilhar, Mostrar pilha, Sair): ";
+        cout << "Escolha a acao (Empilhar, Desempilhar, Mostrar pilha, Pertence, Sair): ";
 
         cin >> opcao;
 
@@ -128,6 +139,18 @@ int main() {
             cout << endl;
             cout << endl;
             break;
+        }
+        else if (opcao == 'P') {
+            int valor;
+            cout << "Digite o valor que quer ver se pertence: ";
+            cin >> valor;
+            cout << endl;
+            if (pertence(pilha,valor)) {
+                cout << "Pertence a pilha!";
+            } else {
+                cout << "Nao pertence a pilha!";
+            }
+
         }
 
 
